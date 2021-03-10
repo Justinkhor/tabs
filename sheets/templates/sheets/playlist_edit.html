@@ -1,0 +1,18 @@
+{% extends 'sheets/base.html' %}
+
+{% block replace %}
+  {% if user.is_authenticated %}
+    {% if user.is_superuser %}
+      <div class="container">
+        <h1>Playlist</h1>
+        <br><br>
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+            {{ form.as_p }}
+            <br>
+          <button type="submit" class="save btn btn-primary">Save</button>
+        </form>
+      </div>
+    {% endif %}
+  {% endif %}
+{% endblock %}

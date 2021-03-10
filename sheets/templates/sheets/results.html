@@ -1,0 +1,19 @@
+{% extends 'sheets/base.html' %}
+
+{% block replace %}
+  <div class="container">
+  <h2>Search Results</h2>
+
+  <br>
+  <hr class="my-4">
+
+  {% for sheet in sheets %}
+    <div>
+        <h4><a href="{% url 'sheet_detail' pk=sheet.pk %}">{{ sheet.title }}</a></h4>
+        <p>{{ sheet.artist }} ({{ sheet.key }})</p>
+        <hr class="my-4">
+    </div>
+  {% endfor %}
+
+  </div>
+{% endblock %}

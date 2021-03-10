@@ -1,0 +1,44 @@
+{% extends 'sheets/base.html' %}
+
+{% block replace %}
+
+  <div class="container">
+    {% if user.is_authenticated %}
+      <h1>Welcome {{ user }}!</h1>
+      <br><br><br><br>
+
+      <div class="row">
+        <div class="col-sm">
+          <h2>New Songs</h2>
+          <br>
+          <hr class="my-4">
+          {% for sheet in sheets %}
+            <div>
+              <h4><a href="{% url 'sheet_detail' pk=sheet.pk %}">{{ sheet.title }}</a></h4>
+              <p>{{ sheet.artist }} ({{ sheet.key }})</p>
+              <hr class="my-4">
+            </div>
+          {% endfor %}
+        </div>
+
+        <div class="col-sm">
+          <form action="{% url 'search_results' %}" method="get">
+            <div class="form-group">
+              <input class="form-control-sm" name="q" type="text" placeholder="Search">
+            </div>
+          </form>
+
+          <br><br>
+          {% if user.is_superuser %}
+            <h4><a href="/new" style="color: red;">ADD</a><h4>
+          {% endif %}
+
+        </div>
+      </div>
+    {% else %}
+    <h2>Welcome! Please <a href="/login">Login</a> or <a href="/signup">Sign Up</a>. </h2>
+    <br><br><br><br><br><br><br><br><br><br><br><br>
+    {% endif %}
+  </div>
+
+{% endblock %}

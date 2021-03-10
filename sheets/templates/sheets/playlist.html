@@ -1,0 +1,33 @@
+{% extends 'sheets/base.html' %}
+
+{% block replace %}
+
+  {% if user.is_authenticated %}
+
+    <div class="container">
+      <div class="row">
+        <div class="col-sm">
+
+          <h2>Playlists</h2>
+          <br>
+          <hr class="my-4">
+
+          {% for playlist in playlists %}
+            <div>
+                <h4><a href="{% url 'playlist_detail' pk=playlist.pk %}">{{ playlist.playlist_name }}</a></h4>
+                <hr class="my-4">
+            </div>
+          {% endfor %}
+        </div>
+
+        <div class="col-sm">
+          {% if user.is_superuser %}
+            <h4><a href="/playlist_new" style="color: red;">CREATE NEW PLAYLIST</a><h4>
+            <br><br>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+{% endblock %}

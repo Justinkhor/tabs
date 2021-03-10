@@ -1,0 +1,32 @@
+{% extends 'sheets/base.html' %}
+
+{% block replace %}
+  {% if user.is_authenticated %}
+
+    <div class="container">
+      <div class="row">
+
+        <div class="col-sm">
+          <h1 style="font-family: Mali;">{{ playlist.playlist_name }}</h1>
+          <br><br>
+
+          <hr class="my-4">
+          {% for sheet in playlist.sheets.all %}
+            <div>
+              <h4><a href="{% url 'sheet_detail' pk=sheet.pk %}">{{ sheet.title }}</a></h4>
+              <p>{{ sheet.artist }} ({{ sheet.key }})</p>
+              <hr class="my-4">
+            </div>
+          {% endfor %}
+        </div>
+
+        <div class="col-sm">
+          {% if user.is_superuser %}
+            <a class="btn btn-primary" href="{% url 'playlist_edit' pk=playlist.pk %}">Edit</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+  {% endif %}
+{% endblock %}

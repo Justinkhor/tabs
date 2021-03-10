@@ -1,0 +1,46 @@
+{% extends 'sheets/base.html' %}
+
+{% block replace %}
+  {% if user.is_authenticated %}
+
+    <div class="container">
+      <div class="row">
+
+        <div class="col-sm">
+          <h1 style="font-family: Mali;">{{ sheet.title }}</h1>
+          <br><br>
+          <pre style="color:black; font-size: 18px; font-family: Mali;">{{ sheet.chords|linebreaksbr }}</pre>
+        </div>
+
+        <div class="col-sm">
+          <br>
+          <h4>Other Keys</h4>
+          <br>
+          {% for s in sheets %}
+            {% if s.key != sheet.key %}
+              <a class="btn btn-primary btn-sm" href="{% url 'sheet_detail' pk=s.pk %}">{{ s.key }}</a>
+              <!-- <small style="font-size: 16px;"><a href="{% url 'sheet_detail' pk=s.pk %}">{{ s.key }}</a></small> -->
+            {% endif %}
+          {% endfor %}
+
+          <br><br><br>
+          {% if user.is_superuser %}
+            {% if not added_to_playlist %}
+              <form>
+                <button class="save btn btn-primary" formaction="{% url 'playlist_add' pk=sheet.pk %}">Add to playlist</button>
+              </form>
+            {% else %}
+              <form>
+                <button class="save btn btn-primary" formaction="{% url 'playlist_remove' pk=sheet.pk %}">Remove from playlist</button>
+              </form>
+            {% endif %}
+            <br>
+            <a class="btn btn-primary" href="{% url 'sheet_edit' pk=sheet.pk %}">Edit</a>
+          {% endif %}
+
+        </div>
+      </div>
+    </div>
+
+  {% endif %}
+{% endblock %}

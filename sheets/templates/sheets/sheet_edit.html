@@ -1,0 +1,15 @@
+{% extends 'sheets/base.html' %}
+
+{% block replace %}
+  {% if user.is_authenticated %}
+    {% if user.is_superuser %}
+      <h1>SHEET</h1>
+      <br><br>
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="save btn btn-primary">Save</button>
+      </form>
+    {% endif %}
+  {% endif %}
+{% endblock %}
