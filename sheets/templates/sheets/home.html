@@ -15,7 +15,7 @@
           {% for sheet in sheets %}
             <div>
               <h4><a href="{% url 'sheet_detail' pk=sheet.pk %}">{{ sheet.title }}</a></h4>
-              <p>{{ sheet.artist }} ({{ sheet.key }})</p>
+              <p>{{ sheet.artist }}</p>
               <hr class="my-4">
             </div>
           {% endfor %}

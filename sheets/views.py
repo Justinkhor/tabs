@@ -8,8 +8,14 @@ from .models import Sheet, Playlist
 from .forms import SheetForm, PlaylistForm, SheetEditForm, PlaylistEditForm
 
 def home(request):
-    sheets = Sheet.objects.order_by('-created_date')[:10]
-    return render(request, 'sheets/home.html', {'sheets': sheets})
+    sheets = Sheet.objects.order_by('-created_date')[:20]
+    current = []
+    returned = []
+    for sheet in sheets:
+        if sheet.title not in current:
+            current.append(sheet.title)
+            returned.append(sheet)
+    return render(request, 'sheets/home.html', {'sheets': returned})
 
 def error_view(request):
     return render(request, 'sheets/error.html')
@@ -153,9 +159,21 @@ def playlist_edit(request, pk):
 def search_results(request):
     query = request.GET['q']
     sheets = Sheet.objects.filter(Q(title__icontains=query) | Q(artist__icontains=query))
-    return render(request, 'sheets/results.html', {'sheets': sheets})
+    current = []
+    returned = []
+    for sheet in sheets:
+        if sheet.title not in current:
+            current.append(sheet.title)
+            returned.append(sheet)
+    return render(request, 'sheets/results.html', {'sheets': returned})
 
 @login_required
 def recently_viewed(request):
     sheets = recent
-    return render(request, 'sheets/recent.html', {'sheets': sheets})
+    current = []
+    returned = []
+    for sheet in sheets:
+        if sheet.title not in current:
+            current.append(sheet.title)
+            returned.append(sheet)
+    return render(request, 'sheets/recent.html', {'sheets': returned})
