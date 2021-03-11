@@ -55,7 +55,7 @@ recent = []
 @login_required
 def sheet_detail(request, pk):
     sheet = get_object_or_404(Sheet, pk=pk)
-    sheets = Sheet.objects.filter(Q(title=sheet.title) | Q(artist=sheet.artist))
+    sheets = Sheet.objects.filter(Q(title=sheet.title) & Q(artist=sheet.artist))
 
     added_to_playlist = False
 
@@ -68,7 +68,7 @@ def sheet_detail(request, pk):
 
         if sheet in playlist.sheets.all():
             added_to_playlist = True
-    
+
     return render(request, 'sheets/sheet_detail.html', {'sheet': sheet, 'sheets':sheets, 'added_to_playlist': added_to_playlist})
 
 @login_required
